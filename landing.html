@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEZER - Space Shooter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            overflow: hidden;
+            background: #0a0015;
+            color: #00ffff;
+        }
+
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .title {
+            font-size: 120px;
+            color: #00ffff;
+            text-shadow: 
+                0 0 20px #00ffff,
+                0 0 40px #00ffff,
+                0 0 60px #00ffff,
+                6px 6px 0 #6b2d8f,
+                -2px -2px 0 #1a0a2a;
+            margin-bottom: 30px;
+            animation: glow 2s ease-in-out infinite;
+            letter-spacing: 12px;
+            font-weight: bold;
+        }
+
+        @keyframes glow {
+            0%, 100% { 
+                text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 60px #00ffff, 6px 6px 0 #6b2d8f, -2px -2px 0 #1a0a2a;
+            }
+            50% { 
+                text-shadow: 0 0 30px #00ffff, 0 0 60px #00ffff, 0 0 90px #00ffff, 6px 6px 0 #6b2d8f, -2px -2px 0 #1a0a2a;
+            }
+        }
+
+        .play-now {
+            position: absolute;
+            top: 180px;
+            right: 280px;
+            font-size: 28px;
+            color: #ffcc00;
+            animation: bounce 1s ease-in-out infinite;
+            transform: rotate(-5deg);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-10px) rotate(-5deg); }
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .menu-button {
+            width: 400px;
+            padding: 18px;
+            background: rgba(75, 35, 120, 0.7);
+            border: 3px solid #00ffff;
+            color: #ffffff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .menu-button:hover {
+            background: rgba(0, 255, 255, 0.3);
+            transform: translateX(5px);
+            box-shadow: 0 0 20px #00ffff, inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .play-button {
+            width: 280px;
+            padding: 22px;
+            background: rgba(0, 255, 255, 0.4);
+            border: 5px solid #00ffff;
+            color: #00ffff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 36px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 40px #00ffff, inset 0 0 30px rgba(0, 255, 255, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+            margin-top: 15px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                box-shadow: 0 0 40px #00ffff, inset 0 0 30px rgba(0, 255, 255, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 60px #00ffff, 0 0 90px #00ffff, inset 0 0 30px rgba(0, 255, 255, 0.3);
+                transform: scale(1.02);
+            }
+        }
+
+        .play-button:hover {
+            background: rgba(0, 255, 255, 0.6);
+            transform: scale(1.08);
+        }
+
+        .bottom-row {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .bottom-button {
+            width: 192px;
+            padding: 18px;
+            background: rgba(75, 35, 120, 0.7);
+            border: 3px solid #00ffff;
+            color: #ffffff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .bottom-button:hover {
+            background: rgba(0, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px #00ffff, inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            font-size: 11px;
+            color: #00ffff;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .copyright {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            font-size: 9px;
+            color: #00ffff;
+            letter-spacing: 1px;
+        }
+
+        .footer-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .icon {
+            width: 35px;
+            height: 35px;
+            border: 2px solid #00ffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .icon:hover {
+            background: rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 15px #00ffff;
+            transform: scale(1.1);
+        }
+
+        /* Floating shapes with exact positioning */
+        .shape {
+            position: fixed;
+            z-index: 1;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 45px solid transparent;
+            border-right: 45px solid transparent;
+            border-bottom: 78px solid #ff006e;
+            opacity: 0.7;
+        }
+
+        .circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #b388ff;
+            opacity: 0.6;
+        }
+
+        .rect {
+            width: 45px;
+            height: 45px;
+            background: #00ffff;
+            opacity: 0.7;
+        }
+
+        .powerup {
+            position: fixed;
+            width: 60px;
+            height: 80px;
+            z-index: 1;
+            animation: spin 15s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .diamond {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #4df3ff 0%, #00b8cc 100%);
+            transform: rotate(45deg);
+            opacity: 0.8;
+            z-index: 1;
+            animation: float 12s ease-in-out infinite;
+            box-shadow: 0 0 30px #00ffff;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    
+    <!-- Floating shapes matching reference image -->
+    <div class="shape circle" style="top: 8%; left: 15%; animation-delay: 0s;"></div>
+    <div class="shape circle" style="top: 18%; right: 18%; animation-delay: 2s;"></div>
+    <div class="shape circle" style="bottom: 18%; left: 15%; animation-delay: 4s;"></div>
+    
+    <div class="shape triangle" style="top: 30%; left: 22%; animation-delay: 1s;"></div>
+    <div class="shape triangle" style="top: 45%; left: 18%; animation-delay: 3s;"></div>
+    <div class="shape triangle" style="bottom: 12%; right: 18%; animation-delay: 5s;"></div>
+    <div class="shape triangle" style="bottom: 25%; right: 12%; animation-delay: 2.5s;"></div>
+    
+    <div class="shape rect" style="top: 18%; left: 4%; animation-delay: 1.5s;"></div>
+    
+    <div class="diamond" style="top: 25%; left: 8%; animation-delay: 2s;"></div>
+    <div class="diamond" style="bottom: 22%; right: 8%; animation-delay: 4s;"></div>
+    
+    <!-- Powerup/spaceship icons -->
+    <div class="powerup" style="top: 15%; right: 10%; animation-delay: 0s;">
+        <svg viewBox="0 0 60 80" fill="none">
+            <rect x="22" y="10" width="16" height="30" fill="#ff6b35" rx="2"/>
+            <rect x="20" y="35" width="20" height="25" fill="#00ffff" rx="3"/>
+            <rect x="18" y="55" width="24" height="15" fill="#ff6b35" rx="2"/>
+            <circle cx="30" cy="47" r="8" fill="#ffffff"/>
+        </svg>
+    </div>
+    
+    <div class="powerup" style="top: 18%; left: 12%; animation-delay: 3s;">
+        <svg viewBox="0 0 60 80" fill="none">
+            <rect x="22" y="10" width="16" height="30" fill="#ff6b35" rx="2"/>
+            <rect x="20" y="35" width="20" height="25" fill="#00ffff" rx="3"/>
+            <rect x="18" y="55" width="24" height="15" fill="#ff6b35" rx="2"/>
+            <circle cx="30" cy="47" r="8" fill="#ffffff"/>
+        </svg>
+    </div>
+
+    <div class="container">
+        <div class="title">HEZER</div>
+        <div class="play-now">PLAY NOW!!</div>
+        
+        <div class="menu">
+            <button class="menu-button" onclick="startGame()">Play Game</button>
+            <button class="menu-button" onclick="showInstructions()">How to Play</button>
+            <button class="menu-button" onclick="alert('Settings coming soon!')">Settings</button>
+        </div>
+
+        <div class="bottom-row">
+            <button class="bottom-button" onclick="alert('Achievements coming soon!')">Achievements</button>
+            <button class="bottom-button" onclick="alert('Profile coming soon!')">Profile</button>
+        </div>
+
+        <button class="play-button" onclick="startGame()">PLAY</button>
+    </div>
+
+    <!-- Nitro preview HUD on landing page -->
+    <div id="nitroPreview" style="position: fixed; bottom: 110px; left: 50%; transform: translateX(-50%); z-index: 3; text-align: center;">
+        <div style="font-size:12px; color:#00ffff; margin-bottom:6px;">NITRO</div>
+        <div style="width:320px; height:18px; background:rgba(0,0,0,0.5); border:2px solid #00ffff; border-radius:6px; box-shadow:0 0 20px #00ffff;">
+            <div id="nitroFill" style="width:100%; height:100%; background:linear-gradient(90deg,#00ccff,#0077ff); border-radius:4px; transition:width 0.3s;"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-icons">
+            <div class="icon" title="Settings">⚙</div>
+            <div class="icon" title="Close">✖</div>
+            <div class="icon" title="Sound">🔊</div>
+            <div class="icon" title="Help">?</div>
+        </div>
+        <div>Hezer v1.0.0</div>
+    </div>
+
+    <div class="copyright">
+        Copyright Studio Z Ao, 20244 distribute!
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Create grid background
+        function drawGrid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#0a0015');
+            gradient.addColorStop(1, '#1a0a3a');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw perspective grid
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height * 0.95);
+            
+            const gridSize = 60;
+            const lines = 25;
+            const perspective = 0.6;
+
+            ctx.strokeStyle = 'rgba(107, 45, 143, 0.6)';
+            ctx.lineWidth = 2;
+
+            // Horizontal lines
+            for (let i = 0; i < lines; i++) {
+                const y = -i * gridSize;
+                const scale = 1 - (i / lines) * perspective;
+                const width = canvas.width * scale;
+                
+                ctx.beginPath();
+                ctx.moveTo(-width / 2, y);
+                ctx.lineTo(width / 2, y);
+                ctx.stroke();
+            }
+
+            // Vertical lines
+            for (let i = -12; i <= 12; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * gridSize, 0);
+                ctx.lineTo(i * gridSize * (1 - perspective), -lines * gridSize);
+                ctx.stroke();
+            }
+
+            ctx.restore();
+
+            // Draw stars
+            for (let i = 0; i < 100; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height * 0.7;
+                const size = Math.random() * 2;
+                ctx.fillStyle = 'rgba(255, 255, 255, ' + Math.random() + ')';
+                ctx.fillRect(x, y, size, size);
+            }
+        }
+
+        drawGrid();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drawGrid();
+        });
+
+        function startGame() {
+            window.location.href = 'index.html';
+        }
+
+        function showInstructions() {
+            alert('How to Play:\n\nArrow Keys / WASD - Move\nSPACE - Fire Missiles\nSHIFT - Activate Speed Boost\nESC - Pause Game\n\nDestroy enemies and asteroids to complete missions!');
+        }
+        // simple nitro preview pulse on landing
+        (function nitroPulse() {
+            const fill = document.getElementById('nitroFill');
+            if (!fill) return;
+            let pct = 1.0;
+            setInterval(() => {
+                pct = pct === 1 ? 0.88 : 1.0;
+                fill.style.width = (pct * 100) + '%';
+            }, 900);
+        })();
+    </script>
+</body>
+</html>
