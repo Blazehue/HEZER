@@ -1,8 +1,28 @@
 # 🚀 Space Shooter - Endless Flying Shooter Game
 
+[![LittleJS](https://img.shields.io/badge/LittleJS-Engine-blue?style=for-the-badge)](https://github.com/KilledByAPixel/LittleJS)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+
 An immersive browser-based endless flying shooter built with LittleJS, featuring third-person 2.5D perspective, pseudo-3D projection, and intense space combat action!
 
 > 🎮 **Born from experimentation!** This game was created while exploring the LittleJS engine for the first time — a journey from curiosity to a fully-playable space shooter with nitro boosts, pseudo-3D combat, and retro-futuristic vibes!
+
+## 📋 Table of Contents
+
+- [Game Features](#-game-features)
+- [Controls](#-controls)
+- [Scoring System](#-scoring-system)
+- [Health System](#-health-system)
+- [Visual Style](#-visual-style)
+- [Installation & Running](#-installation--running)
+- [Project Structure](#-project-structure)
+- [Technical Details](#-technical-details)
+- [Gameplay Tips](#-gameplay-tips)
+- [Advanced Features](#-advanced-features)
+- [Troubleshooting](#-troubleshooting)
+- [Credits](#-credits)
+- [Future Enhancements](#-future-enhancements)
+- [License](#-license)
 
 ## 🎮 Game Features
 
@@ -237,4 +257,7 @@ Free to use, modify, and distribute. Have fun! 🎮
 
 ---
 
-**Enjoy your flight through space, Commander! 🚀✨**
+<p align="center">
+  Enjoy your flight through space, Commander! 🚀✨<br>
+  Made with ❤️ by <a href="https://github.com/Blazehue">Blazehue</a>
+</p>
