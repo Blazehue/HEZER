@@ -1,3 +1,5 @@
+(More to come(still in development for more features)
+
 # 🚀 Space Shooter - Endless Flying Shooter Game
 
 [![LittleJS](https://img.shields.io/badge/LittleJS-Engine-blue?style=for-the-badge)](https://github.com/KilledByAPixel/LittleJS)
