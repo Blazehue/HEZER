@@ -9,7 +9,7 @@ An immersive browser-based endless flying shooter built with LittleJS, featuring
 
 > 🎮 **Born from experimentation!** This game was created while exploring the LittleJS engine for the first time — a journey from curiosity to a fully-playable space shooter with nitro boosts, pseudo-3D combat, and retro-futuristic vibes!
 
-## 📋 Table of Contents
+## 📋 Table of Contents:
 
 - [Game Features](#-game-features)
 - [Controls](#-controls)
