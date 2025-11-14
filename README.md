@@ -1,4 +1,4 @@
-(More to come(still in development for more features))-v2 Coming soon!
+(More to come(still in development for more features))-v2 Coming soon
 
 # 🚀 Space Shooter - Endless Flying Shooter Game
 
