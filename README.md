@@ -1,6 +1,6 @@
 (More to come(still in development for more features))-v2 Coming soon.
 
-# Space Shooter - Endless Flying Shooter Game.
+# Space Shooter - Endless Flying Shooter Game
 
 [![LittleJS](https://img.shields.io/badge/LittleJS-Engine-blue?style=for-the-badge)](https://github.com/KilledByAPixel/LittleJS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
